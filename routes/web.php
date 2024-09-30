@@ -18,3 +18,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+use App\Http\Controllers\BookingController;
+
+Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
+Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');

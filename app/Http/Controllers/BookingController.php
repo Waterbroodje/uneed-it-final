@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Timeslot;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
     public function index()
     {
-        $timeslots = Timeslot::all(); // Fetch all timeslots from the database
-        return view('book', compact('timeslots')); // Pass the timeslots to the view
+        $timeslots = Timeslot::where('date', '>=', Carbon::today())
+            ->orderBy('date')
+            ->get()
+            ->groupBy('date'); // Group timeslots by date
+
+        return view('book', compact('timeslots'));
     }
 
     public function store(Request $request)

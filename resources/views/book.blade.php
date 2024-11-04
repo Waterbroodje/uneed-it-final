@@ -91,7 +91,7 @@
 
                         <input type="text" name="reason" id="reason" placeholder="Reason" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
 
-                        <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Book Now</button>
+                        <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Reserveer tijdslot</button>
                     </div>
                 </div>
             </form>

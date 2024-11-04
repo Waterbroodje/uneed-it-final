@@ -9,6 +9,13 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- PIN -->
+        <div class="mt-4">
+            <x-input-label for="pin" :value="__('PIN')" />
+            <x-text-input id="pin" class="block mt-1 w-full" type="password" name="pin" required autocomplete="off" />
+            <x-input-error :messages="$errors->get('pin')" class="mt-2" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />

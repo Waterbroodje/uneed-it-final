@@ -13,6 +13,7 @@ class CreateTimeslotsTable extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
+            $table->boolean('booked')->default(false);
             $table->timestamps();
         });
     }

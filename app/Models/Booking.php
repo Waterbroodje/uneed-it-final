@@ -10,11 +10,12 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'timeslot_id',
         'name',
         'email',
         'reason',
-        'phone'
+        'phone',
     ];
 
     // Define the relationship with Timeslot

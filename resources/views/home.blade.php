@@ -16,7 +16,7 @@
 <!-- Navbar -->
 <nav class="px-16 py-4">
     <div class="flex justify-between items-center">
-        <div class="flex gap-4 cursor-pointer" onclick="window.location.href='/login'">
+        <div class="flex gap-4 cursor-pointer" onclick="window.location.href='/dashboard'">
             <button class="text-gray-900 hover:text-gray-600 font-medium">Log in</button>
         </div>
     </div>
@@ -29,5 +29,7 @@
         Boek een afspraak
     </button>
 </div>
+
+
 </body>
 </html>

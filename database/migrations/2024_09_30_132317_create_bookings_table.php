@@ -6,16 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    // In the bookings migration file
     public function up()
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('timeslot_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('phone');
             $table->string('reason');
             $table->timestamps();

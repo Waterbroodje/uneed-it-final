@@ -4,8 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800">
                 {{ __('Admin Dashboard') }}
             </h2>
-            <button
-                onclick="window.location.href = '/book'"
+            <button onclick="window.location.href = '/book'"
                 class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -14,6 +13,76 @@
             </button>
         </div>
     </x-slot>
+
+    @if (session('success'))
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    </div>
+@endif
+
+<script>
+    function confirmDelete(type, id, name) {
+        const message = type === 'tijdslot' 
+            ? 'Weet je zeker dat je dit tijdslot wilt verwijderen?' 
+            : 'Weet je zeker dat je deze afspraak wilt verwijderen?';
+            
+        if (confirm(message)) {
+            const url = type === 'tijdslot' 
+                ? '{{ url("/timeslot") }}/' + id
+                : '{{ url("/booking") }}/' + id;
+            
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Er is iets misgegaan bij het verwijderen.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Er is iets misgegaan bij het verwijderen.');
+            });
+        }
+    }
+    </script>
+
+    <script>
+        function confirmDelete(type, id, name) {
+            if (confirm(`Weet je zeker dat je deze ${type} wilt verwijderen?`)) {
+                const url = type === 'afspraak' ? `/booking/${id}` : `/timeslot/${id}`;
+
+                fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert('Er is iets misgegaan bij het verwijderen.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Er is iets misgegaan bij het verwijderen.');
+                    });
+            }
+        }
+    </script>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,9 +146,9 @@
                             <div class="flex items-center gap-4">
                                 <div class="bg-blue-50 p-3 rounded-lg">
                                     <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
-                                         viewBox="0 0 24 24">
+                                        viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
                                 </div>
                                 <div>
@@ -94,11 +163,12 @@
                                         {{ $appointment->timeslot->end_time }}</p>
                                     <p class="text-sm text-gray-500">Vandaag</p>
                                 </div>
-                                <button class="text-gray-400 hover:text-gray-500">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                         viewBox="0 0 24 24">
+                                <button
+                                    onclick="confirmDelete('afspraak', {{ $appointment->id }}, '{{ $appointment->name }}')"
+                                    class="text-red-600 hover:text-red-800 transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                 </button>
                             </div>
@@ -147,11 +217,13 @@
                                             <p class="text-sm text-gray-500">
                                                 {{ $appointment->timeslot->formatted_date }}</p>
                                         </div>
-                                        <button class="text-gray-400 hover:text-gray-500">
+                                        <button
+                                            onclick="confirmDelete('afspraak', {{ $appointment->id }}, '{{ $appointment->name }}')"
+                                            class="text-red-600 hover:text-red-800 transition-colors">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
                                         </button>
                                     </div>
@@ -179,13 +251,14 @@
                 <div class="p-6 border-b border-gray-100 flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-gray-900">Beschikbare tijdsloten</h3>
                     <button
-                        class="text-sm px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4v16m8-8H4" />
-                        </svg>
-                        Nieuw tijdslot
-                    </button>
+                    onclick="window.location.href='{{ route('timeslot.create') }}'"
+                    class="text-sm px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4v16m8-8H4" />
+                    </svg>
+                    Nieuw tijdslot
+                </button>
                 </div>
                 <div class="p-6">
                     @if ($availableTimeslots->isEmpty())
@@ -222,11 +295,13 @@
                                     <div class="flex items-center gap-2">
                                         <span
                                             class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full font-medium">Beschikbaar</span>
-                                        <button class="text-gray-400 hover:text-gray-600 p-1">
+                                        <button
+                                            onclick="confirmDelete('tijdslot', {{ $timeslot->id }}, '{{ $timeslot->formatted_date }}')"
+                                            class="text-red-600 hover:text-red-800 transition-colors">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
                                         </button>
                                     </div>
@@ -256,6 +331,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </x-app-layout>

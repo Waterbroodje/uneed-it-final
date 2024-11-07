@@ -289,7 +289,7 @@
                         </li>
                         <li>
                             <a href="mailto:info@u-need-it.nl" class="text-gray-500 hover:text-blue-600 transition-colors">
-                                info@u-need-it.nl
+                                info@uneedit.nl
                             </a>
                         </li>
                     </ul>

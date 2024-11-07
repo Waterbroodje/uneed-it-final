@@ -5,23 +5,23 @@
                 {{ __('Admin Dashboard') }}
             </h2>
             <button
+                onclick="window.location.href = '/book'"
                 class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
-                New Appointment
+                Nieuwe booking
             </button>
         </div>
     </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Stats Overview -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-500">Today's Appointments</p>
+                            <p class="text-sm font-medium text-gray-500">Afspraken vandaag</p>
                             <h4 class="text-2xl font-bold text-gray-900 mt-1">{{ $currentAppointments->total() }}</h4>
                         </div>
                         <div class="bg-blue-50 p-3 rounded-lg">
@@ -36,7 +36,7 @@
                 <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-500">Upcoming Appointments</p>
+                            <p class="text-sm font-medium text-gray-500">Opkomende afspraken</p>
                             <h4 class="text-2xl font-bold text-gray-900 mt-1">{{ $upcomingAppointments->total() }}</h4>
                         </div>
                         <div class="bg-indigo-50 p-3 rounded-lg">
@@ -52,7 +52,7 @@
                 <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-500">Available Slots</p>
+                            <p class="text-sm font-medium text-gray-500">Beschikbare sloten</p>
                             <h4 class="text-2xl font-bold text-gray-900 mt-1">{{ $availableTimeslots->total() }}</h4>
                         </div>
                         <div class="bg-green-50 p-3 rounded-lg">
@@ -69,78 +69,48 @@
             <!-- Current Appointments -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
                 <div class="p-6 border-b border-gray-100">
-                    <h3 class="text-lg font-semibold text-gray-900">Current Appointments</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Huidige afspraak</h3>
                 </div>
                 <div class="p-6">
-                    @if ($currentAppointments->isEmpty())
-                        <div class="flex items-center justify-between">
-                            <button class="px-3 py-1 text-sm text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
-                                {{ $currentAppointments->onFirstPage() ? 'disabled' : '' }}>
-                                Previous
-                            </button>
-                            <span class="text-sm text-gray-600">
-                                Page {{ $currentAppointments->currentPage() }} of {{ $currentAppointments->lastPage() }}
-                            </span>
-                            <button class="px-3 py-1 text-sm text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
-                                {{ !$currentAppointments->hasMorePages() ? 'disabled' : '' }}>
-                                Next
-                            </button>
-                        </div>
-                    @else
-                        <div class="divide-y divide-gray-100">
-                            @foreach ($currentAppointments as $appointment)
-                                <div class="py-4 flex items-center justify-between">
-                                    <div class="flex items-center gap-4">
-                                        <div class="bg-blue-50 p-3 rounded-lg">
-                                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-gray-900">{{ $appointment->name }}</p>
-                                            <p class="text-sm text-gray-500">{{ $appointment->email }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="font-medium text-gray-900">
-                                                {{ $appointment->timeslot->start_time }} -
-                                                {{ $appointment->timeslot->end_time }}</p>
-                                            <p class="text-sm text-gray-500">Today</p>
-                                        </div>
-                                        <button class="text-gray-400 hover:text-gray-500">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                    @foreach ($currentAppointments as $appointment)
+                        <div class="py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
+                                         viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
                                 </div>
-                            @endforeach
-                        </div>
-                        @if ($currentAppointments->hasPages())
-                            <div class="mt-6 border-t border-gray-100 pt-6">
-                                <div class="flex items-center justify-between">
-                                    <div class="text-sm text-gray-500">
-                                        Showing {{ $currentAppointments->firstItem() }} to
-                                        {{ $currentAppointments->lastItem() }}
-                                        of {{ $currentAppointments->total() }} appointments
-                                    </div>
-                                    {{ $currentAppointments->links() }}
+                                <div>
+                                    <p class="font-medium text-gray-900">{{ $appointment->name }}</p>
+                                    <p class="text-sm text-gray-500">{{ $appointment->email }}</p>
                                 </div>
                             </div>
-                        @endif
-                    @endif
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <p class="font-medium text-gray-900">
+                                        {{ $appointment->timeslot->start_time }} -
+                                        {{ $appointment->timeslot->end_time }}</p>
+                                    <p class="text-sm text-gray-500">Vandaag</p>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-500">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                         viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
             <!-- Upcoming Appointments -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
                 <div class="p-6 border-b border-gray-100">
-                    <h3 class="text-lg font-semibold text-gray-900">Upcoming Appointments</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Opkomende afspraken</h3>
                 </div>
                 <div class="p-6">
                     @if ($upcomingAppointments->isEmpty())
@@ -150,7 +120,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <p class="text-gray-500">No upcoming appointments</p>
+                            <p class="text-gray-500">Geen opkomende afspraken</p>
                         </div>
                     @else
                         <div class="divide-y divide-gray-100">
@@ -194,7 +164,7 @@
                                     <div class="text-sm text-gray-500">
                                         Showing {{ $upcomingAppointments->firstItem() }} to
                                         {{ $upcomingAppointments->lastItem() }}
-                                        of {{ $upcomingAppointments->total() }} appointments
+                                        of {{ $upcomingAppointments->total() }} bookings
                                     </div>
                                     {{ $upcomingAppointments->links() }}
                                 </div>
@@ -207,14 +177,14 @@
             <!-- Available Timeslots -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-100">
                 <div class="p-6 border-b border-gray-100 flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-gray-900">Available Timeslots</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Beschikbare tijdsloten</h3>
                     <button
                         class="text-sm px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 4v16m8-8H4" />
                         </svg>
-                        Add Timeslot
+                        Nieuw tijdslot
                     </button>
                 </div>
                 <div class="p-6">
@@ -228,8 +198,7 @@
                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <p class="text-gray-600 font-medium">No available timeslots</p>
-                            <p class="text-sm text-gray-500 mt-1">Click the button above to add new timeslots</p>
+                            <p class="text-gray-600 font-medium">Geen beschikbare tijdsloten</p>
                         </div>
                     @else
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -252,7 +221,7 @@
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <span
-                                            class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full font-medium">Available</span>
+                                            class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full font-medium">Beschikbaar</span>
                                         <button class="text-gray-400 hover:text-gray-600 p-1">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
@@ -270,16 +239,16 @@
                                 <button onclick="window.location.href='{{ $availableTimeslots->previousPageUrl() }}'"
                                     class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 {{ $availableTimeslots->onFirstPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
                                     {{ $availableTimeslots->onFirstPage() ? 'disabled' : '' }}>
-                                    Previous
+                                    Vorige
                                 </button>
                                 <span class="text-sm text-gray-600">
-                                    Page {{ $availableTimeslots->currentPage() }} of
+                                    Pagina {{ $availableTimeslots->currentPage() }} van
                                     {{ $availableTimeslots->lastPage() }}
                                 </span>
                                 <button onclick="window.location.href='{{ $availableTimeslots->nextPageUrl() }}'"
                                     class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 {{ !$availableTimeslots->hasMorePages() ? 'opacity-50 cursor-not-allowed' : '' }}"
                                     {{ !$availableTimeslots->hasMorePages() ? 'disabled' : '' }}>
-                                    Next
+                                    Volgende
                                 </button>
                             </div>
                         @endif

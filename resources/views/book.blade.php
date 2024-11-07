@@ -165,7 +165,7 @@
 
                             <!-- Submit Button -->
                             <div class="mt-8">
-                                <button type="submit" 
+                                <button type="submit"
                                         class="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
                                     Afspraak Bevestigen
                                 </button>
@@ -221,8 +221,8 @@
                 <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Contact</h3>
                 <ul class="space-y-3">
                     <li class="text-gray-500">
-                        <span class="block">Hoofdstraat 123</span>
-                        <span class="block">3000 AA Rotterdam</span>
+                        <span class="block">Zuidbaan 514</span>
+                        <span class="block">2841 MD Moordrecht</span>
                     </li>
                     <li>
                         <a href="tel:+31612345678" class="text-gray-500 hover:text-blue-600 transition-colors">
@@ -231,7 +231,7 @@
                     </li>
                     <li>
                         <a href="mailto:info@u-need-it.nl" class="text-gray-500 hover:text-blue-600 transition-colors">
-                            info@u-need-it.nl
+                            info@uneedit.nl
                         </a>
                     </li>
                 </ul>
@@ -251,7 +251,7 @@
 </footer>
     <script>
         let timeslots = @json($timeslots);
-        
+
         function selectDate(date) {
             // Update date buttons state
             document.querySelectorAll('.date-btn').forEach(btn => {
@@ -278,7 +278,7 @@
                          hover:border-blue-300 hover:bg-gray-50 transition-all">
                         <div class="flex items-center justify-center space-x-2">
                             <svg class="w-5 h-5 text-gray-400 peer-checked:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <span class="font-medium text-gray-900">${slot.start_time} - ${slot.end_time}</span>

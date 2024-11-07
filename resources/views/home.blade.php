@@ -279,8 +279,8 @@
                     <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Contact</h3>
                     <ul class="space-y-3">
                         <li class="text-gray-500">
-                            <span class="block">Hoofdstraat 123</span>
-                            <span class="block">3000 AA Rotterdam</span>
+                            <span class="block">Zuidbaan 514</span>
+                            <span class="block">2841 MD Moordrecht</span>
                         </li>
                         <li>
                             <a href="tel:+31612345678" class="text-gray-500 hover:text-blue-600 transition-colors">

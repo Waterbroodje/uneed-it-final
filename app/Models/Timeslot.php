@@ -10,11 +10,8 @@ class Timeslot extends Model
     use HasFactory;
 
 
-    protected $fillable = [
-        'start_time',
-        'end_time',
-        'booked', // Add the booked field
-    ];
+  // app/Models/Timeslot.php
+protected $fillable = ['date', 'start_time', 'end_time', 'booked'];
 
     // Define the relationship with Booking
     public function bookings()

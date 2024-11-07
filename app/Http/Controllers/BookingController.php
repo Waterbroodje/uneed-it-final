@@ -18,12 +18,12 @@ class BookingController extends Controller
     {
         $timeslots = Timeslot::where('date', '>=', Carbon::today())
             ->where('booked', false)
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('date', '>', Carbon::today())
-                ->orWhere(function($query) {
-                    $query->where('date', '=', Carbon::today())
-                    ->where('end_time', '>', Carbon::now());
-                });
+                    ->orWhere(function ($query) {
+                        $query->where('date', '=', Carbon::today())
+                            ->where('end_time', '>', Carbon::now());
+                    });
             })
             ->orderBy('date')
             ->orderBy('start_time')
@@ -78,5 +78,57 @@ class BookingController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Er is een onverwachte fout opgetreden.']);
         }
+    }
+
+
+    public function destroy(Booking $booking)
+    {
+        try {
+            $timeslot = $booking->timeslot;
+            $timeslot->booked = false;
+            $timeslot->save();
+
+            $booking->delete();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false], 500);
+        }
+    }
+
+    public function destroyTimeslot(Timeslot $timeslot)
+    {
+        try {
+            if ($timeslot->booked) {
+                return response()->json(['success' => false, 'message' => 'Cannot delete a booked timeslot'], 400);
+            }
+
+            $timeslot->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false], 500);
+        }
+    }
+    public function createTimeslot()
+    {
+        return view('timeslot.create');
+    }
+
+    public function storeTimeslot(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date|after_or_equal:today',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
+        ]);
+
+        Timeslot::create([
+            'date' => $request->date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'booked' => false,
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Tijdslot succesvol aangemaakt');
     }
 }

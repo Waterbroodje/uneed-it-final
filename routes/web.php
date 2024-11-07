@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 use App\Http\Controllers\BookingController;
-
 Route::get('/book', [BookingController::class, 'index'])->name('book.index');
 Route::post('/book', [BookingController::class, 'store'])->name('book.store');
+Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+Route::delete('/timeslot/{timeslot}', [BookingController::class, 'destroyTimeslot'])->name('timeslot.destroy');

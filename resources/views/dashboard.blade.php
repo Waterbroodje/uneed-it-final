@@ -196,8 +196,8 @@
                                     <p class="font-medium text-gray-900">
                                         {{ $appointment->timeslot->start_time }} -
                                         {{ $appointment->timeslot->end_time }}</p>
-                                    <p class="text-sm text-gray-500">Vandaag</p>
-                                </div>
+                                    <p class="text-sm text-gray-500">
+                                        {{  \Carbon\Carbon::parse($appointment->timeslot->date)->format('j F Y') }}</p>                                </div>
                                 <button
                                     onclick='showAppointmentReason(@json($appointment->reason))'
                                     class="text-blue-600 hover:text-blue-800 transition-colors">

@@ -231,7 +231,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Mail ons</h3>
                     <p class="text-gray-600 mb-3">We reageren binnen 24 uur</p>
                     <a href="mailto:info@u-need-it.nl" class="text-blue-600 font-medium hover:text-blue-700">
-                        info@u-need-it.nl
+                        info@uneedit.nl
                     </a>
                 </div>
             </div>

@@ -18,7 +18,9 @@ class AdminDashboardController extends Controller
         })->paginate(5, ['*'], 'current_page');
 
         $todayAppointments = Booking::whereHas('timeslot', function ($query) {
-            $query->where('date', '=', Carbon::today()->format('Y-m-d'));
+            $query->where('date', '=', Carbon::today()->format('Y-m-d'))
+                    ->where('date', '>=', Carbon::today()->format('Y-m-d'))
+                    ->where('start_time', '>', Carbon::now()->format('H:i:s'));;
         })->paginate(5, ['*'], 'today');
 
         $upcomingAppointments = Booking::whereHas('timeslot', function ($query) {
@@ -31,10 +33,17 @@ class AdminDashboardController extends Controller
             ->paginate(5, ['*'], 'upcoming_page'); // Correct pagination query parameter
 
         $availableTimeslots = Timeslot::where('booked', false)
-            ->where('date', '>=', Carbon::today()->format('Y-m-d'))
+            ->where(function ($query) {
+                $query->where('date', '>', Carbon::today()->format('Y-m-d'))
+                    ->orWhere(function ($query) {
+                        $query->where('date', Carbon::today()->format('Y-m-d'))
+                            ->where('start_time', '>', Carbon::now()->format('H:i:s'));
+                    });
+            })
             ->orderBy('date')
             ->orderBy('start_time')
             ->paginate(9, ['*'], 'available_page');
+
 
         return view('dashboard', compact('currentAppointments', 'todayAppointments', 'upcomingAppointments', 'availableTimeslots'));
     }

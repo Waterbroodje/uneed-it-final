@@ -272,16 +272,16 @@
             // Generate time slots
             let options = timeslots[date].map(slot => `
                 <label class="time-slot block">
-                    <input type="radio" name="timeslot_id" value="${slot.id}" class="peer sr-only" required>
+                    <input type="radio" name="timeslot_id" value="${slot.id}" class="peer sr-only" ${slot.booked ? 'disabled' : ''} required>
                     <div class="p-4 rounded-xl border border-gray-200 cursor-pointer
-                         peer-checked:border-blue-500 peer-checked:bg-blue-50
-                         hover:border-blue-300 hover:bg-gray-50 transition-all">
+                         ${slot.booked ? 'bg-gray-100 cursor-not-allowed text-gray-400' : 'peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-blue-300 hover:bg-gray-50'}
+                         transition-all">
                         <div class="flex items-center justify-center space-x-2">
-                            <svg class="w-5 h-5 text-gray-400 peer-checked:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 ${slot.booked ? 'text-gray-300' : 'text-gray-400 peer-checked:text-blue-500'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span class="font-medium text-gray-900">${slot.start_time} - ${slot.end_time}</span>
+                            <span class="font-medium ${slot.booked ? 'text-gray-400' : 'text-gray-900'}">${slot.start_time} - ${slot.end_time}</span>
                         </div>
                     </div>
                 </label>

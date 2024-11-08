@@ -169,12 +169,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Pin number validation script -->
-    <script>
-        document.getElementById('pin').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
-        });
-    </script>
 </body>
 </html>

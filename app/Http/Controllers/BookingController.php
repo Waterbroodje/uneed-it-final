@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\BookingConfirmation;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
@@ -17,7 +16,6 @@ class BookingController extends Controller
     public function index()
     {
         $timeslots = Timeslot::where('date', '>=', Carbon::today())
-            ->where('booked', false)
             ->where(function ($query) {
                 $query->where('date', '>', Carbon::today())
                     ->orWhere(function ($query) {

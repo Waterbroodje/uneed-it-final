@@ -60,16 +60,16 @@ class AdminDashboardController extends Controller
         try {
             if ($timeslot->booked) {
                 return response()->json([
-                    'success' => false, 
+                    'success' => false,
                     'message' => 'Kan geen geboekt tijdslot verwijderen'
                 ], 400);
             }
-            
+
             $timeslot->delete();
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json([
-                'success' => false, 
+                'success' => false,
                 'message' => 'Er is een fout opgetreden bij het verwijderen'
             ], 500);
         }
@@ -81,13 +81,13 @@ class AdminDashboardController extends Controller
             $timeslot = $booking->timeslot;
             $timeslot->booked = false;
             $timeslot->save();
-            
+
             $booking->delete();
-            
+
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json([
-                'success' => false, 
+                'success' => false,
                 'message' => 'Er is een fout opgetreden bij het verwijderen'
             ], 500);
         }

@@ -46,17 +46,17 @@
     }
 
     function confirmDelete(type, id, name) {
-        const message = type === 'tijdslot' 
-            ? 'Weet je zeker dat je dit tijdslot wilt verwijderen?' 
+        const message = type === 'tijdslot'
+            ? 'Weet je zeker dat je dit tijdslot wilt verwijderen?'
             : 'Weet je zeker dat je deze afspraak wilt verwijderen?';
-            
+
         if (confirm(message)) {
             showDeleteLoading();
-            
-            const url = type === 'tijdslot' 
+
+            const url = type === 'tijdslot'
                 ? '{{ url("/timeslot") }}/' + id
                 : '{{ url("/booking") }}/' + id;
-            
+
             fetch(url, {
                 method: 'DELETE',
                 headers: {
@@ -202,13 +202,13 @@
                                     onclick='showAppointmentReason(@json($appointment->reason))'
                                     class="text-blue-600 hover:text-blue-800 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </button>
-                                <button 
+                                <button
                                     onclick="confirmDelete('afspraak', {{ $appointment->id }}, '{{ $appointment->name }}')"
                                     class="text-red-600 hover:text-red-800 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,17 +266,17 @@
                                         onclick='showAppointmentReason(@json($appointment->reason))'
                                         class="text-blue-600 hover:text-blue-800 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                         </svg>
                                     </button>
-                                    <button 
+                                    <button
                                         onclick="confirmDelete('afspraak', {{ $appointment->id }}, '{{ $appointment->name }}')"
                                         class="text-red-600 hover:text-red-800 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
                                     </button>
@@ -340,12 +340,12 @@
                                     <div>
                                         <span class="font-medium text-gray-900">{{ $timeslot->start_time }} -
                                             {{ $timeslot->end_time }}</span>
-                                        <p class="text-sm text-gray-500">{{ $timeslot->formatted_date }}</p>
+                                        <p class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($timeslot->date)->format('j F Y') }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full font-medium">Beschikbaar</span>
-                                    <button 
+                                    <button
                                         onclick="confirmDelete('tijdslot', {{ $timeslot->id }}, '{{ $timeslot->formatted_date }}')"
                                         class="text-red-600 hover:text-red-800 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

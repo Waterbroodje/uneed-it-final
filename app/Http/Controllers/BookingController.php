@@ -108,6 +108,7 @@ class BookingController extends Controller
             return response()->json(['success' => false], 500);
         }
     }
+
     public function createTimeslot()
     {
         return view('timeslot.create');

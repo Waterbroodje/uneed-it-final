@@ -23,4 +23,5 @@ class Booking extends Model
     {
         return $this->belongsTo(Timeslot::class);
     }
+
 }

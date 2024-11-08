@@ -129,7 +129,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-500">Afspraken vandaag</p>
-                            <h4 class="text-2xl font-bold text-gray-900 mt-1">{{ $currentAppointments->total() }}</h4>
+                            <h4 class="text-2xl font-bold text-gray-900 mt-1">{{ $todayAppointments->total() }}</h4>
                         </div>
                         <div class="bg-blue-50 p-3 rounded-lg">
                             <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,7 +260,7 @@
                                             {{ $appointment->timeslot->start_time }} -
                                             {{ $appointment->timeslot->end_time }}</p>
                                         <p class="text-sm text-gray-500">
-                                            {{ $appointment->timeslot->formatted_date }}</p>
+                                            {{  \Carbon\Carbon::parse($appointment->timeslot->date)->format('j F Y') }}</p>
                                     </div>
                                     <button
                                         onclick='showAppointmentReason(@json($appointment->reason))'

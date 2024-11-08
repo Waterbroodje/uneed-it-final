@@ -16,6 +16,7 @@ class BookingController extends Controller
     public function index()
     {
         $timeslots = Timeslot::where('date', '>=', Carbon::today())
+            ->where('date', '<=', Carbon::today()->addDays(7)) // Limit to the next 7 days
             ->where(function ($query) {
                 $query->where('date', '>', Carbon::today())
                     ->orWhere(function ($query) {
